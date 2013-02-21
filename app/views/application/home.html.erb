@@ -9,13 +9,19 @@
   <div class="jumbotron">
     <h1>Stalk now!</h1>
 
-    <form class="form-inline">
-      <input type="text" class="input-large" name="owner" placeholder="Github Username">
-      <input type="text" class="input-large" name="repo" placeholder="Repo name">
-      <button type="submit" class="btn btn-primary">Stalk!</button>
-    </form>
+    <% if @current_user.nil? %>
+      <%= link_to 'Connect With Github', 'https://github.com/login/oauth/authorize?client_id=' + ENV['GITHUB_APP_ID_DEV'] + '&redirect_uri=http://localhost:5000/auth/callback' %>
+    <% else %>
 
-    <div class="results"></div>
+      <form class="form-inline">
+        <input type="text" class="input-large" name="owner" placeholder="Github Username">
+        <input type="text" class="input-large" name="repo" placeholder="Repo name">
+        <button type="submit" class="btn btn-primary">Stalk!</button>
+      </form>
+
+      <div class="results"></div>
+
+    <% end %>
   </div>
 
   <div class="footer">

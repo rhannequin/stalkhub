@@ -9,8 +9,15 @@
   <div class="jumbotron">
     <h1>Stalk now!</h1>
 
-    <% if @current_user.nil? %>
-      <%= link_to 'Connect With Github', 'https://github.com/login/oauth/authorize?client_id=' + ENV['GITHUB_APP_ID_DEV'] + '&redirect_uri=http://localhost:5000/auth/callback' %>
+    <% if current_user.nil? %>
+      <%= link_to(
+            'Connect With Github',
+            '%{github_auth_url}?client_id=%{client_id}&scope=%{scope}&redirect_uri=%{redirect_uri}' % {
+              :github_auth_url => 'https://github.com/login/oauth/authorize',
+              :client_id       => (Rails.env.production? ? ENV['GITHUB_APP_ID'] : ENV['GITHUB_APP_ID_DEV']).to_s,
+              :scope           => 'user:email,user:follow,public_repo',
+              :redirect_uri    => (Rails.env.production? ? ENV['GITHUB_CALLBACK_URI'] : ENV['GITHUB_CALLBACK_URI_DEV']).to_s
+            }) %>
     <% else %>
 
       <form class="form-inline">

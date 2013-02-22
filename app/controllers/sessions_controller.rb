@@ -1,19 +1,20 @@
 class SessionsController < ApplicationController
   def callback
     if !request['code'].nil?
+      require 'json'
       code = request['code']
       params =  { :client_id     => ENV['GITHUB_APP_ID_DEV'],
                   :client_secret => ENV['GITHUB_APP_SECRET_DEV'],
                   :code          => code }
 
-      response = http.request(uri, 'post', params, true)
+      response = make_request 'https://github.com/login/oauth/access_token', 'post', params, true
 
       token = response.body.split('&').first.split('=')
-      # token = { token[0] => token[1] }
-      # session[:user_token] = token['access_token']
-      user = get_user_info token[1]
-      # session[:github_user] = { :access_token => token[1], :name => user['name'], :email => user['email'] } # Maybe user.parse ?
-      redirect_to users_new_path
+      user = JSON.parse get_user_info(token[1]).body
+      session[:github_user] = { :token      => token[1],
+                                :login      => user['login'],
+                                :avatar_url => user['avatar_url'] }
+      redirect_to new_users_path
     end
   end
 
@@ -32,14 +33,14 @@ class SessionsController < ApplicationController
         request = Net::HTTP::Post.new(uri.request_uri)
         request.set_form_data data
       else
-        request = Net::HTTP::GET.new(uri.request_uri)
+        request = Net::HTTP::Get.new(uri.request_uri)
       end
 
       http.request(request)
     end
 
     def get_user_info(access_token)
-      uri = 'https://api.github.com/user'
-      http.request(uri, 'get', { :access_token => access_token }, true)
+      url = 'https://api.github.com/user?access_token=' + access_token
+      make_request url, 'get', {}, true
     end
 end

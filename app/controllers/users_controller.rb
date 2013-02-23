@@ -3,7 +3,7 @@ class UsersController < ApplicationController
     if User.find_by_login(session[:github_user][:login]).nil?
       @user = User.new session[:github_user]
     else
-      redirect_to root_path, flash: {warning: 'You have already an account, please signin'}
+      redirect_to root_path, flash: {warning: 'You have already an account, please login'}
     end
   end
 

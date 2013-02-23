@@ -1,72 +1,30 @@
-<div class="container-narrow">
-
-  <div class="masthead">
-    <h3 class="muted">Stalkhub</h3>
+<% if current_user.nil? %>
+  <div class="auth-actions">
+    <a class="btn btn-large btn-primary" data-toggle="collapse" data-target="#login" href="#">Login</a>
+    <%= link_to(
+        'Sign up',
+        '%{github_auth_url}?client_id=%{client_id}&scope=%{scope}&redirect_uri=%{redirect_uri}' % {
+          :github_auth_url => 'https://github.com/login/oauth/authorize',
+          :client_id       => (Rails.env.production? ? ENV['GITHUB_APP_ID'] : ENV['GITHUB_APP_ID_DEV']).to_s,
+          :scope           => 'user:email,user:follow,public_repo',
+          :redirect_uri    => (Rails.env.production? ? ENV['GITHUB_CALLBACK_URI'] : ENV['GITHUB_CALLBACK_URI_DEV']).to_s
+        }, :class => 'btn btn-large btn-success') %>
   </div>
-
-  <hr>
-
-  <div class="jumbotron">
-    <h1>Stalk now!</h1>
-
-    <% if current_user.nil? %>
-      <p>
-        <%= link_to(
-            'Signin',
-            '%{github_auth_url}?client_id=%{client_id}&scope=%{scope}&redirect_uri=%{redirect_uri}' % {
-              :github_auth_url => 'https://github.com/login/oauth/authorize',
-              :client_id       => (Rails.env.production? ? ENV['GITHUB_APP_ID'] : ENV['GITHUB_APP_ID_DEV']).to_s,
-              :scope           => 'user:email,user:follow,public_repo',
-              :redirect_uri    => (Rails.env.production? ? ENV['GITHUB_CALLBACK_URI'] : ENV['GITHUB_CALLBACK_URI_DEV']).to_s
-            }) %>
-      </p>
-      <h2>Login</h2>
-      <p>
-        <%= form_tag({:controller => 'sessions', :action => 'login'}, :method => 'post') do %>
-          <%= text_field_tag :login, '', :placeholder => 'Username' %>
-          <%= password_field_tag :password, '', :placeholder => 'Password' %>
-          <%= submit_tag("Search") %>
-        <% end %>
-      </p>
-    <% else %>
-
-      <form class="form-inline">
-        <input type="text" class="input-large" name="owner" placeholder="Github Username">
-        <input type="text" class="input-large" name="repo" placeholder="Repo name">
-        <button type="submit" class="btn btn-primary">Stalk!</button>
-      </form>
-
-      <div class="results"></div>
-
+  <div id="login" class="collapse out">
+    <%= form_tag({:controller => 'sessions', :action => 'login'}, :method => 'post', :class => 'form-inline') do %>
+      <%= text_field_tag :login, '', :placeholder => 'Username', :class => 'input-medium' %>
+      <%= password_field_tag :password, '', :placeholder => 'Password', :class => 'input-medium' %>
+      <%= submit_tag 'Login', :class => 'btn btn-primary' %>
     <% end %>
   </div>
+<% else %>
 
-  <div class="footer">
-    <p>Beerware License</p>
-  </div>
+  <form class="form-inline">
+    <input type="text" class="input-large" name="owner" placeholder="Github Username">
+    <input type="text" class="input-large" name="repo" placeholder="Repo name">
+    <button type="submit" class="btn btn-primary">Stalk!</button>
+  </form>
 
-</div> <!-- /container -->
+  <div class="results"></div>
 
-<!--[if lt IE 7]>
-  <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
-<![endif]-->
-
-<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-<script>
-  var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
-  (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-  g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-  s.parentNode.insertBefore(g,s)}(document,'script'));
-</script>
-
-<!-- Commit template -->
-<script type="x/template" id="commit-template">
-  <div class="row-fluid">
-    <div class="span3">{{ author }}</div>
-    <div class="span6">{{ message }}</div>
-    <div class="span3">{{ date }} {{ time }}</div>
-  </div>
-  <hr>
-</script>
-
-<script data-main="scripts/main.js" src="scripts/vendor/require.js"></script>
+<% end %>

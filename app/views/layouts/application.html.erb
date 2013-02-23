@@ -8,19 +8,57 @@
 </head>
 <body>
 
-  <% if flash.empty? %>
-    <div class="alert alert-block">
-      <a class="close" data-dismiss="alert">&times;</a>
-    </div>
-    <% else %>
-      <% flash.each do |name, msg| %> <!-- key == {:info|:notice, :success, :warning|:alert, :error} -->
-        <%= content_tag :div, :class => "alert alert-#{name}" do %> <a class="close" data-dismiss="alert">&times;</a>
+<div class="container-narrow">
+
+  <div class="masthead">
+    <h3 class="muted"><%= link_to 'Stalkhub', root_path %></h3>
+  </div>
+
+  <hr>
+
+  <% if !flash.empty? %>
+    <% flash.each do |name, msg| %> <!-- key == {:info|:notice, :success, :warning|:alert, :error} -->
+      <%= content_tag :div, :class => "alert alert-#{name}" do %> <a class="close" data-dismiss="alert">&times;</a>
         <%= msg %>
       <% end %>
     <% end %>
   <% end %>
 
-<%= yield %>
+  <div class="jumbotron">
+    <h1>Stalk now!</h1>
+
+    <%= yield %>
+  </div>
+
+  <div class="footer">
+    <p><a href="https://twitter.com/rhannequin">Beerware License</a></p>
+  </div>
+
+</div> <!-- /container -->
+
+<!--[if lt IE 7]>
+  <p class="chromeframe">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">activate Google Chrome Frame</a> to improve your experience.</p>
+<![endif]-->
+
+<!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
+<script>
+  var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+  (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+  g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+  s.parentNode.insertBefore(g,s)}(document,'script'));
+</script>
+
+<!-- Commit template -->
+<script type="x/template" id="commit-template">
+  <div class="row-fluid">
+    <div class="span3">{{ author }}</div>
+    <div class="span6">{{ message }}</div>
+    <div class="span3">{{ date }} {{ time }}</div>
+  </div>
+  <hr>
+</script>
+
+<script data-main="scripts/main.js" src="scripts/vendor/require.js"></script>
 
 </body>
 </html>

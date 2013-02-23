@@ -22,9 +22,9 @@ class SessionsController < ApplicationController
     @user = User.authenticate request.params[:login], request.params[:password]
     if !@user.nil?
       User.current_user = @user
-      redirect_to root_path, flash: {success: 'Welcome back ' + current_user.login}
+      redirect_to root_path, flash: { success: 'Welcome back %{username}!' % { :username => current_user.login } }
     else
-      redirect_to root_path, flash: {error: 'Sorry we couldn\'t log you'}
+      redirect_to root_path, flash: { error: "Sorry we couldn't log you" }
     end
   end
 

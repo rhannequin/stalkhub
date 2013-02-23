@@ -10,14 +10,24 @@
     <h1>Stalk now!</h1>
 
     <% if current_user.nil? %>
-      <%= link_to(
-            'Connect With Github',
+      <p>
+        <%= link_to(
+            'Signin',
             '%{github_auth_url}?client_id=%{client_id}&scope=%{scope}&redirect_uri=%{redirect_uri}' % {
               :github_auth_url => 'https://github.com/login/oauth/authorize',
               :client_id       => (Rails.env.production? ? ENV['GITHUB_APP_ID'] : ENV['GITHUB_APP_ID_DEV']).to_s,
               :scope           => 'user:email,user:follow,public_repo',
               :redirect_uri    => (Rails.env.production? ? ENV['GITHUB_CALLBACK_URI'] : ENV['GITHUB_CALLBACK_URI_DEV']).to_s
             }) %>
+      </p>
+      <h2>Login</h2>
+      <p>
+        <%= form_tag({:controller => 'sessions', :action => 'login'}, :method => 'post') do %>
+          <%= text_field_tag :login, '', :placeholder => 'Username' %>
+          <%= password_field_tag :password, '', :placeholder => 'Password' %>
+          <%= submit_tag("Search") %>
+        <% end %>
+      </p>
     <% else %>
 
       <form class="form-inline">

@@ -9,13 +9,36 @@
   <div class="jumbotron">
     <h1>Stalk now!</h1>
 
-    <form class="form-inline">
-      <input type="text" class="input-large" name="owner" placeholder="Github Username">
-      <input type="text" class="input-large" name="repo" placeholder="Repo name">
-      <button type="submit" class="btn btn-primary">Stalk!</button>
-    </form>
+    <% if current_user.nil? %>
+      <p>
+        <%= link_to(
+            'Signin',
+            '%{github_auth_url}?client_id=%{client_id}&scope=%{scope}&redirect_uri=%{redirect_uri}' % {
+              :github_auth_url => 'https://github.com/login/oauth/authorize',
+              :client_id       => (Rails.env.production? ? ENV['GITHUB_APP_ID'] : ENV['GITHUB_APP_ID_DEV']).to_s,
+              :scope           => 'user:email,user:follow,public_repo',
+              :redirect_uri    => (Rails.env.production? ? ENV['GITHUB_CALLBACK_URI'] : ENV['GITHUB_CALLBACK_URI_DEV']).to_s
+            }) %>
+      </p>
+      <h2>Login</h2>
+      <p>
+        <%= form_tag({:controller => 'sessions', :action => 'login'}, :method => 'post') do %>
+          <%= text_field_tag :login, '', :placeholder => 'Username' %>
+          <%= password_field_tag :password, '', :placeholder => 'Password' %>
+          <%= submit_tag("Search") %>
+        <% end %>
+      </p>
+    <% else %>
 
-    <div class="results"></div>
+      <form class="form-inline">
+        <input type="text" class="input-large" name="owner" placeholder="Github Username">
+        <input type="text" class="input-large" name="repo" placeholder="Repo name">
+        <button type="submit" class="btn btn-primary">Stalk!</button>
+      </form>
+
+      <div class="results"></div>
+
+    <% end %>
   </div>
 
   <div class="footer">

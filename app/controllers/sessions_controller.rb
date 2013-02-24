@@ -19,12 +19,30 @@ class SessionsController < ApplicationController
   end
 
   def login
-    @user = User.authenticate request.params[:login], request.params[:password]
-    if !@user.nil?
+    user = User.authenticate request.params[:login], request.params[:password]
+    session[:check_token] = { :id => user.id } if !user.nil?
+    if !request.params[:code].nil? and !session[:check_token].nil? # Get access_token and update User
+      params =  { :client_id     => ENV['GITHUB_APP_ID_DEV'],
+                  :client_secret => ENV['GITHUB_APP_SECRET_DEV'],
+                  :code          => request.params[:code] }
+
+      response = make_request 'https://github.com/login/oauth/access_token', 'post', params, true
+      token = response.body.split('&').first.split('=')
+      @user = User.find(session[:check_token][:id])
+      @user.token = token[1]
+      @user.save
       User.current_user = @user
-      redirect_to root_path, flash: {success: 'Welcome back ' + current_user.login}
-    else
-      redirect_to root_path, flash: {error: 'Sorry we couldn\'t log you'}
+      session[:check_token] = nil # session value not necessary anymore
+      redirect_to root_path, flash: { success: 'Welcome back %{username}!' % { :username => current_user.login } }
+    elsif session[:check_token].nil? # Wrong User login
+      redirect_to root_path, flash: { error: "Sorry we couldn't log you" }
+    else # User is ok, get oauth.authorize's code to ask access_token
+      redirect_to '%{github_auth_url}?client_id=%{client_id}&scope=%{scope}&redirect_uri=%{redirect_uri}' % {
+        :github_auth_url => 'https://github.com/login/oauth/authorize',
+        :client_id       => (Rails.env.production? ? ENV['GITHUB_APP_ID'] : ENV['GITHUB_APP_ID_DEV']).to_s,
+        :scope           => 'user:email,user:follow,public_repo',
+        :redirect_uri    => ((Rails.env.production? ? ENV['ROOT_URL'] : ENV['ROOT_URL_DEV']) + 'login').to_s
+      }
     end
   end
 

@@ -5,7 +5,7 @@ define ['jquery', 'backbone', 'models/Commit', 'views/CommitView'], ($, Backbone
     tagName: 'div'
     className: 'jumbotron'
     $results: $('.results')
-    lastCommit: null,
+    lastCommit: null
     apiUrl: 'https://api.github.com/'
     userToken: $('#require-js').data('params').user.token
     ciPerPage: 100
@@ -35,7 +35,6 @@ define ['jquery', 'backbone', 'models/Commit', 'views/CommitView'], ($, Backbone
       self    = @
       ciStr   = ''
       dataLen = data.length
-      i       = if recursive then 1 else 0
 
       # Create all <li>s to display
       for obj in data
@@ -56,13 +55,18 @@ define ['jquery', 'backbone', 'models/Commit', 'views/CommitView'], ($, Backbone
 
       # Check if they were the last commits
       if dataLen > 1
+        @lastCommit = data[dataLen - 1].sha
         params =
           access_token: @userToken
           per_page: @ciPerPage,
           sha: data[dataLen - 1].sha # Last commit displayed
 
         call = @apiCall(url, 'get', 'jsonp', params)
-                  .done (data) => @showResults(data.data, url, yes)
+                  .done (data) =>
+                    commits = data.data
+                    commitsLength = commits.length
+                    if commitsLength > 1 or (commitsLength is 1 && commits[commitsLength - 1].sha isnt @lastCommit)
+                      @showResults(commits, url, yes)
 
     apiCall: (url, method, dataType, data) ->
       $.ajax

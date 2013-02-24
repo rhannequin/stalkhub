@@ -9,14 +9,6 @@ class User < ActiveRecord::Base
 
   before_save :encrypt_password
 
-  def self.current_user
-    Thread.current[:user]
-  end
-
-  def self.current_user=(usr)
-    Thread.current[:user] = usr
-  end
-
   def has_password?(submitted_password)
     encrypted_password == encrypt(submitted_password)
   end

@@ -31,7 +31,7 @@ class SessionsController < ApplicationController
       @user = User.find(session[:check_token][:id])
       @user.token = token[1]
       @user.save
-      User.current_user = @user
+      self.current_user = @user
       session[:check_token] = nil # session value not necessary anymore
       redirect_to root_path, flash: { success: 'Welcome back %{username}!' % { :username => current_user.login } }
     elsif session[:check_token].nil? # Wrong User login

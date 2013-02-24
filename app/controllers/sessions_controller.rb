@@ -3,9 +3,9 @@ class SessionsController < ApplicationController
     if !request['code'].nil?
       require 'json'
       code = request['code']
-      params =  { :client_id     => ENV['GITHUB_APP_ID_DEV'],
-                  :client_secret => ENV['GITHUB_APP_SECRET_DEV'],
-                  :code          => code }
+      params =  { :client_id     => Rails.env.production? ? ENV['GITHUB_APP_ID'] : ENV['GITHUB_APP_ID_DEV'],
+                  :client_secret => Rails.env.production? ? ENV['GITHUB_APP_SECRET'] : ENV['GITHUB_APP_SECRET_DEV'],
+                  :code          => request.params[:code] }
 
       response = make_request 'https://github.com/login/oauth/access_token', 'post', params, true
 
@@ -22,8 +22,8 @@ class SessionsController < ApplicationController
     user = User.authenticate request.params[:login], request.params[:password]
     session[:check_token] = { :id => user.id } if !user.nil?
     if !request.params[:code].nil? and !session[:check_token].nil? # Get access_token and update User
-      params =  { :client_id     => ENV['GITHUB_APP_ID_DEV'],
-                  :client_secret => ENV['GITHUB_APP_SECRET_DEV'],
+      params =  { :client_id     => Rails.env.production? ? ENV['GITHUB_APP_ID'] : ENV['GITHUB_APP_ID_DEV'],
+                  :client_secret => Rails.env.production? ? ENV['GITHUB_APP_SECRET'] : ENV['GITHUB_APP_SECRET_DEV'],
                   :code          => request.params[:code] }
 
       response = make_request 'https://github.com/login/oauth/access_token', 'post', params, true
@@ -31,7 +31,7 @@ class SessionsController < ApplicationController
       @user = User.find(session[:check_token][:id])
       @user.token = token[1]
       @user.save
-      User.current_user = @user
+      self.current_user = @user
       session[:check_token] = nil # session value not necessary anymore
       redirect_to root_path, flash: { success: 'Welcome back %{username}!' % { :username => current_user.login } }
     elsif session[:check_token].nil? # Wrong User login

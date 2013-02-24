@@ -6,9 +6,14 @@ class ApplicationController < ActionController::Base
   end
 
   private
+    def current_user=(usr)
+      session[:user] = usr
+    end
+
     def current_user
       return @current_user if @current_user
-      @current_user = User.current_user
+      return @current_user = session[:user] unless session[:user].nil?
+      @current_user = session[:user] = nil
     end
     helper_method :current_user
 

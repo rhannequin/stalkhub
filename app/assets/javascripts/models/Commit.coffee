@@ -4,6 +4,6 @@ define ['backbone'], (Backbone) ->
 
     defaults:
       author: 'Unknown user'
-      isLoggedProfile: yes
+      isLoggedProfile: no
 
     initialize: ->

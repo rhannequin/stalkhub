@@ -1,7 +1,7 @@
 require.config
   paths:
     jquery: 'jquery'
-    bootstrap: 'twitter/bootstrap'
+    bootstrap: 'bootstrap'
     backbone: 'backbone'
     lodash: 'lodash'
     handlebars: 'handlebars.min'

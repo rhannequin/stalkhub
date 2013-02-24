@@ -19,7 +19,10 @@ test:
   timeout: 5000
 
 production:
-  adapter: sqlite3
-  database: db/production.sqlite3
-  pool: 5
-  timeout: 5000
+  adapter: ENV['DB_ADAPTER_PROD']
+  encoding: ENV['DB_ENCODING_PROD']
+  database: ENV['DB_DATABASE_PROD']
+  port: ENV['DB_PORT_PROD']
+  host: ENV['DB_HOST_PROD']
+  username: ENV['DB_USERNAME_PROD']
+  password: ENV['DB_PASSWORD_PROD']

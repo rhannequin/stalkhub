@@ -24,12 +24,12 @@ define ['jquery', 'backbone', 'models/Commit', 'views/CommitView'], ($, Backbone
       repo  = form.find('input[name=repo]').val()
       url   = 'repos/' + owner + '/' + repo + '/commits'
 
-      apiCall = @apiCall(url, 'get', 'json',
+      apiCall = @apiCall(url, 'get', 'jsonp',
         access_token: @userToken
         per_page: this.ciPerPage
       ).done (data) =>
         @$results.html ''
-        @showResults data, url, no
+        @showResults data.data, url, no
 
     showResults: (data, url, recursive) ->
       self    = @
@@ -61,8 +61,8 @@ define ['jquery', 'backbone', 'models/Commit', 'views/CommitView'], ($, Backbone
           per_page: @ciPerPage,
           sha: data[dataLen - 1].sha # Last commit displayed
 
-        call = @apiCall(url, 'get', 'json', params)
-                  .done (data) => @showResults(data, url, yes)
+        call = @apiCall(url, 'get', 'jsonp', params)
+                  .done (data) => @showResults(data.data, url, yes)
 
     apiCall: (url, method, dataType, data) ->
       $.ajax

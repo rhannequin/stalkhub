@@ -3,7 +3,7 @@
 <head>
   <title>Stalkhub</title>
   <%= stylesheet_link_tag    "application", :media => "all" %>
-  <%= javascript_include_tag "application" %>
+  <%#= javascript_include_tag "application" %>
   <%= csrf_meta_tags %>
 </head>
 <body>
@@ -51,14 +51,14 @@
 <!-- Commit template -->
 <script type="x/template" id="commit-template">
   <div class="row-fluid">
-    <div class="span3">{{ author }}</div>
-    <div class="span6">{{ message }}</div>
+    <div class="span3">{{ safe author }}</div>
+    <div class="span6">{{{ safe message }}}</div>
     <div class="span3">{{ date }} {{ time }}</div>
   </div>
   <hr>
 </script>
 
-<script data-main="scripts/main.js" src="scripts/vendor/require.js"></script>
+<script data-params='<%= { :user => current_user }.to_json.html_safe %>' data-main="/assets/main.js" src="/assets/require.js" id="require-js"></script>
 
 </body>
 </html>

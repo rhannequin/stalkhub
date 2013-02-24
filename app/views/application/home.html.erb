@@ -1,6 +1,6 @@
 <% if current_user.nil? %>
   <div class="auth-actions">
-    <a class="btn btn-large btn-primary" data-toggle="collapse" data-target="#login" href="#">Login</a>
+    <a class="btn btn-large btn-primary" data-toggle="collapse" data-target="#login">Login</a>
     <%= link_to(
         'Sign up',
         '%{github_auth_url}?client_id=%{client_id}&scope=%{scope}&redirect_uri=%{redirect_uri}' % {

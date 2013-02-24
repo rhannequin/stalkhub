@@ -12,6 +12,7 @@ class UsersController < ApplicationController
     @user.password = params[:user][:password]
     if @user.valid? and @user.save
       User.current_user = @user
+      session[:github_user] = nil # session value not necessary anymore
       redirect_to root_path, flash: {success: 'Welcome ' + current_user.login}
     else
       render action: :new

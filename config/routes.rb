@@ -7,6 +7,7 @@ Stalkhub::Application.routes.draw do
 
   get '/login',  :to => 'sessions#login'
   post '/login', :to => 'sessions#login'
+  get '/logout', :to => 'sessions#logout', :as => :logout
 
   root :to => 'application#home'
 

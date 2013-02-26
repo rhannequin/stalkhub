@@ -46,6 +46,11 @@ class SessionsController < ApplicationController
     end
   end
 
+  def logout
+    self.current_user = nil
+    redirect_to root_path, flash: { warning: 'You are not logged anymore, please login to use the application.' }
+  end
+
 
   private
 

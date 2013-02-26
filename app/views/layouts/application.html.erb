@@ -11,6 +11,12 @@
 <div class="container-narrow">
 
   <div class="masthead">
+    <ul class="nav nav-pills pull-right">
+      <% if current_user %>
+      <li><%= link_to 'Hey, ' + current_user.login, '' %></a></li>
+      <li><%= link_to 'Logout', logout_path %></a></li>
+      <% end %>
+    </ul>
     <h3 class="muted"><%= link_to 'Stalkhub', root_path %></h3>
   </div>
 
@@ -31,6 +37,9 @@
   </div>
 
   <div class="footer">
+    <% if current_user %>
+    <p class="pull-right"><a href="/delete/confirm">Delete my account</a></p>
+    <% end %>
     <p><a href="https://twitter.com/rhannequin">Beerware License</a></p>
   </div>
 

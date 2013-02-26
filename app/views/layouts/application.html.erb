@@ -37,6 +37,9 @@
   </div>
 
   <div class="footer">
+    <% if current_user %>
+    <p class="pull-right"><a href="/delete/confirm">Delete my account</a></p>
+    <% end %>
     <p><a href="https://twitter.com/rhannequin">Beerware License</a></p>
   </div>
 

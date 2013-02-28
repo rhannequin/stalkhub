@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  owner: MyString
+  repo: MyString
+  id_user: 
+
+two:
+  owner: MyString
+  repo: MyString
+  id_user: 

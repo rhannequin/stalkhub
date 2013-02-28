@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Owner:</b>
+  <%= @stalking.owner %>
+</p>
+
+<p>
+  <b>Repo:</b>
+  <%= @stalking.repo %>
+</p>
+
+
+<%= link_to 'Edit', edit_stalking_path(@stalking) %> |
+<%= link_to 'Back', stalkings_path %>

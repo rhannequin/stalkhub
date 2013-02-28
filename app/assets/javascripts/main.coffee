@@ -1,6 +1,7 @@
 require.config
   paths:
     jquery: 'jquery'
+    jqueryujs: 'jquery-ujs'
     bootstrap: 'bootstrap'
     backbone: 'backbone'
     lodash: 'lodash'
@@ -8,6 +9,8 @@ require.config
   shim:
     jquery:
       exports: '$'
+    jqueryujs:
+      deps: ['jquery']
     bootstrap:
       deps: ['jquery']
       exports: 'Bootstrap'

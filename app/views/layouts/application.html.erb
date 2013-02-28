@@ -13,8 +13,8 @@
   <div class="masthead">
     <ul class="nav nav-pills pull-right">
       <% if current_user %>
-      <li><%= link_to 'Hey, ' + current_user.login, '' %></a></li>
-      <li><%= link_to 'Logout', logout_path %></a></li>
+      <li><%= link_to 'Hey, ' + current_user.login, '' %></li>
+      <li><%= link_to 'Logout', logout_path %></li>
       <% end %>
     </ul>
     <h3 class="muted"><%= link_to 'Stalkhub', root_path %></h3>
@@ -67,7 +67,7 @@
   <hr>
 </script>
 
-<script data-params='<%= { :user => current_user }.to_json.html_safe %>' data-main="/assets/main.js" src="/assets/require.js" id="require-js"></script>
+<script data-script='<%= @require_js[:script].empty? ? '' : @require_js[:script] %>' data-params='<%= @require_js[:params].to_json.html_safe %>' data-main="/assets/main.js" src="/assets/require.js" id="require-js"></script>
 
 </body>
 </html>

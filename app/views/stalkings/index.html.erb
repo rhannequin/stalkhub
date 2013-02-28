@@ -1,0 +1,25 @@
+<h1>Listing stalkings</h1>
+
+<table>
+  <tr>
+    <th>Owner</th>
+    <th>Repo</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @stalkings.each do |stalking| %>
+  <tr>
+    <td><%= stalking.owner %></td>
+    <td><%= stalking.repo %></td>
+    <td><%= link_to 'Show', stalking %></td>
+    <td><%= link_to 'Edit', edit_stalking_path(stalking) %></td>
+    <td><%= link_to 'Destroy', stalking, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Stalking', new_stalking_path %>

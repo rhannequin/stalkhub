@@ -1,5 +1,8 @@
 Stalkhub::Application.routes.draw do
 
+  resources :stalkings
+
+
   resource :users
   get '/delete/confirm', :to => 'users#destroy_confirm'
   get '/delete',         :to => 'users#destroy'

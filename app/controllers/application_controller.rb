@@ -1,8 +1,10 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
   before_filter :current_user
+  before_filter :require_js
 
   def home
+    @require_js[:script] = 'views/MainView'
   end
 
   private
@@ -16,5 +18,13 @@ class ApplicationController < ActionController::Base
       @current_user = session[:user] = nil
     end
     helper_method :current_user
+
+    def is_logged?
+      redirect_to root_path, flash: { error: 'You must be logged to enjoy this application.' } if current_user.nil?
+    end
+
+    def require_js
+      @require_js = { :script => {}, :params => { :user => current_user } }
+    end
 
 end

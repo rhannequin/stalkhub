@@ -1,4 +1,4 @@
-define ['jquery', 'backbone', 'models/Commit', 'views/CommitView'], ($, Backbone, Commit, CommitView) ->
+define ['jquery', 'lodash', 'backbone', 'models/Commit', 'views/CommitView'], ($, _, Backbone, Commit, CommitView) ->
 
   MainView = Backbone.View.extend
 
@@ -75,4 +75,4 @@ define ['jquery', 'backbone', 'models/Commit', 'views/CommitView'], ($, Backbone
         dataType: dataType
         data:     data
 
-  MainView
+  new MainView()

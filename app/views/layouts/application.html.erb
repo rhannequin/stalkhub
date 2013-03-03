@@ -13,10 +13,12 @@
   <div class="masthead">
     <ul class="nav nav-pills pull-right">
       <% if current_user %>
-      <li><%= link_to 'Hey, ' + current_user.login, settings_path %></li>
-      <li><%= link_to 'My stalkings', stalkings_path %></li>
+      <li><span>Hey, <%= current_user.login %><span></li>
       <li><%= link_to 'Logout', logout_path %></li>
+      <li><%= link_to 'My stalkings', stalkings_path %></li>
+      <li><%= link_to 'Settings', settings_path %></li>
       <% end %>
+      <li><%= link_to 'About', about_path %></li>
     </ul>
     <h3 class="muted"><%= link_to 'Stalkhub', root_path %></h3>
   </div>

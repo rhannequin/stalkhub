@@ -7,6 +7,9 @@ class ApplicationController < ActionController::Base
     @require_js[:script] = 'views/MainView'
   end
 
+  def about
+  end
+
   private
     def current_user=(usr)
       session[:user] = usr

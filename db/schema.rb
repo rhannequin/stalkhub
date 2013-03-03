@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(:version => 20130228214949) do
   create_table "stalkings", :force => true do |t|
     t.string   "owner"
     t.string   "repo"
-    t.integer  "id_user"
+    t.integer  "user_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end

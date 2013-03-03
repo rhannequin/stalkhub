@@ -3,7 +3,7 @@ class CreateStalkings < ActiveRecord::Migration
     create_table :stalkings do |t|
       t.string :owner
       t.string :repo
-      t.integer :id_user
+      t.integer :user_id
 
       t.timestamps
     end

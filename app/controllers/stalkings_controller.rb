@@ -43,7 +43,7 @@ class StalkingsController < ApplicationController
   # POST /stalkings.json
   def create
     @stalking = Stalking.new(params[:stalking])
-    @stalking.id_user = current_user.id
+    @stalking.user_id = current_user.id
 
     respond_to do |format|
       if @stalking.save
@@ -60,7 +60,7 @@ class StalkingsController < ApplicationController
   # PUT /stalkings/1.json
   def update
     @stalking = Stalking.find(params[:id])
-    @stalking.id_user = current_user.id
+    @stalking.user_id = current_user.id
 
     respond_to do |format|
       if @stalking.update_attributes(params[:stalking])

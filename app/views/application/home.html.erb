@@ -1,30 +1,34 @@
-<% if current_user.nil? %>
-  <div class="auth-actions">
-    <a class="btn btn-large btn-primary" data-toggle="collapse" data-target="#login">Login</a>
-    <%= link_to(
-        'Sign up',
-        '%{github_auth_url}?client_id=%{client_id}&scope=%{scope}&redirect_uri=%{redirect_uri}' % {
-          :github_auth_url => 'https://github.com/login/oauth/authorize',
-          :client_id       => (Rails.env.production? ? ENV['GITHUB_APP_ID'] : ENV['GITHUB_APP_ID_DEV']).to_s,
-          :scope           => 'user:email,user:follow,public_repo',
-          :redirect_uri    => (Rails.env.production? ? ENV['GITHUB_CALLBACK_URI'] : ENV['GITHUB_CALLBACK_URI_DEV']).to_s
-        }, :class => 'btn btn-large btn-success') %>
-  </div>
-  <div id="login" class="collapse out">
-    <%= form_tag({:controller => 'sessions', :action => 'login'}, :method => 'post', :class => 'form-inline') do %>
-      <%= text_field_tag :login, '', :placeholder => 'Username', :class => 'input-medium' %>
-      <%= password_field_tag :password, '', :placeholder => 'Password', :class => 'input-medium' %>
-      <%= submit_tag 'Login', :class => 'btn btn-primary' %>
-    <% end %>
-  </div>
-<% else %>
+<div class="main-feature">
+  <h1>Stalk now!</h1>
 
-  <form class="form-inline">
-    <input type="text" class="input-large" name="owner" placeholder="Github Username">
-    <input type="text" class="input-large" name="repo" placeholder="Repo name">
-    <button type="submit" class="btn btn-primary">Stalk!</button>
-  </form>
+  <% if current_user.nil? %>
+    <div class="auth-actions">
+      <a class="btn btn-large btn-primary" data-toggle="collapse" data-target="#login">Login</a>
+      <%= link_to(
+          'Sign up',
+          '%{github_auth_url}?client_id=%{client_id}&scope=%{scope}&redirect_uri=%{redirect_uri}' % {
+            :github_auth_url => 'https://github.com/login/oauth/authorize',
+            :client_id       => (Rails.env.production? ? ENV['GITHUB_APP_ID'] : ENV['GITHUB_APP_ID_DEV']).to_s,
+            :scope           => 'user:email,user:follow,public_repo',
+            :redirect_uri    => (Rails.env.production? ? ENV['GITHUB_CALLBACK_URI'] : ENV['GITHUB_CALLBACK_URI_DEV']).to_s
+          }, :class => 'btn btn-large btn-success') %>
+    </div>
+    <div id="login" class="collapse out">
+      <%= form_tag({:controller => 'sessions', :action => 'login'}, :method => 'post', :class => 'form-inline') do %>
+        <%= text_field_tag :login, '', :placeholder => 'Username', :class => 'input-medium' %>
+        <%= password_field_tag :password, '', :placeholder => 'Password', :class => 'input-medium' %>
+        <%= submit_tag 'Login', :class => 'btn btn-primary' %>
+      <% end %>
+    </div>
+  <% else %>
 
-  <div class="results"></div>
+    <form class="form-inline">
+      <input type="text" class="input-large" name="owner" placeholder="Github Username">
+      <input type="text" class="input-large" name="repo" placeholder="Repo name">
+      <button type="submit" class="btn btn-primary">Stalk!</button>
+    </form>
 
-<% end %>
+    <div class="results"></div>
+
+  <% end %>
+</div>

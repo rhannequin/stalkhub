@@ -18,7 +18,7 @@ class StalkingsControllerTest < ActionController::TestCase
 
   test "should create stalking" do
     assert_difference('Stalking.count') do
-      post :create, stalking: { id_user: @stalking.id_user, owner: @stalking.owner, repo: @stalking.repo }
+      post :create, stalking: { user_id: @stalking.user_id, owner: @stalking.owner, repo: @stalking.repo }
     end
 
     assert_redirected_to stalking_path(assigns(:stalking))
@@ -35,7 +35,7 @@ class StalkingsControllerTest < ActionController::TestCase
   end
 
   test "should update stalking" do
-    put :update, id: @stalking, stalking: { id_user: @stalking.id_user, owner: @stalking.owner, repo: @stalking.repo }
+    put :update, id: @stalking, stalking: { user_id: @stalking.user_id, owner: @stalking.owner, repo: @stalking.repo }
     assert_redirected_to stalking_path(assigns(:stalking))
   end
 

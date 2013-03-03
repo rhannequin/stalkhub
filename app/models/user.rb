@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
                         :uniqueness => { :case_sensitive => false }
   validates :password,  :length     => { :within => 6..40 }
 
+  has_many :stalkings, :dependent => :destroy
+
   before_save :encrypt_password
 
   def has_password?(submitted_password)
@@ -19,13 +21,13 @@ class User < ActiveRecord::Base
     return user if user.has_password?(submitted_password)
   end
 
-  private
+  def encrypt_password
+    self.salt = make_salt if new_record?
+    self.encrypted_password = encrypt(password)
+    self.password = nil
+  end
 
-    def encrypt_password
-      self.salt = make_salt if new_record?
-      self.encrypted_password = encrypt(password)
-      self.password = nil
-    end
+  private
 
     def encrypt(string)
       secure_hash("#{salt}--#{string}")

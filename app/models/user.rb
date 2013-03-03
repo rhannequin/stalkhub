@@ -5,11 +5,9 @@ class User < ActiveRecord::Base
   validates :avatar_url, :token, :presence => true
   validates :login,     :presence   => true,
                         :uniqueness => { :case_sensitive => false }
-  validates :password,  :length     => { :within => 6..40 }
+  validates :password,  :length     => { :within => 6..100 }
 
   has_many :stalkings, :dependent => :destroy
-
-  before_save :encrypt_password
 
   def has_password?(submitted_password)
     encrypted_password == encrypt(submitted_password)
@@ -24,7 +22,7 @@ class User < ActiveRecord::Base
   def encrypt_password
     self.salt = make_salt if new_record?
     self.encrypted_password = encrypt(password)
-    self.password = nil
+    self.password = self.encrypted_password
   end
 
   private

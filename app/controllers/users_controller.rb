@@ -36,16 +36,21 @@ class UsersController < ApplicationController
   # PUT /users/1.json
   def update
     @user = User.find(params[:id])
-    respond_to do |format|
+    if !params[:user][:password].empty? # We want to update password
       if params[:user][:password] == params[:password][:confirm]
+        @user.password = params[:user][:password]
         @user.encrypt_password
-        if @user.update_attributes(params[:user])
-          format.html { redirect_to settings_path, flash: { success: 'User was successfully updated.' } }
-          format.json { head :no_content }
-        else
-          format.html { render action: 'show' }
-          format.json { render json: @user.errors, status: :unprocessable_entity }
-        end
+        @user.save
+      else
+        return redirect_to settings_path, flash: { error: 'The passwords are not the same.' }
+      end
+    end
+
+    @user.login = params[:user][:login] unless params[:user][:login].nil?
+    respond_to do |format|
+      if @user.save
+        format.html { redirect_to settings_path, flash: { success: 'User was successfully updated.' } }
+        format.json { head :no_content }
       else
         format.html { render action: 'show' }
         format.json { render json: @user.errors, status: :unprocessable_entity }

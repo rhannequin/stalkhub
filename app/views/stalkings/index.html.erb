@@ -8,6 +8,7 @@
       <a href="<%= edit_stalking_path(stalking) %>" title="Edit"><i class="icon-edit"></i></a>
       <a href="https://github.com/<%= stalking.owner %>/<%= stalking.repo %>" target="blank" class="repo"><%= stalking.owner %>/<%= stalking.repo %></a>
       <button class="btn btn-success stalk">Stalk</button>
+      <img class="loading" src="/assets/ajax-loader.gif" alt="Loading..." />
     </p>
   <% end %>
   <p>

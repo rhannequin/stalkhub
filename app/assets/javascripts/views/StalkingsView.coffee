@@ -2,17 +2,15 @@ define [
   'jquery',
   'lodash',
   'backbone',
+  'Github',
   'models/Commit',
   'views/CommitView'
-], ($, _, Backbone, Commit, CommitView) ->
+], ($, _, Backbone, Github, Commit, CommitView) ->
 
   StalkingsView = Backbone.View.extend
 
     el: '.stalkings'
     $results: $('.results')
-    apiUrl: 'https://api.github.com/'
-    userToken: $('#require-js').data('params').user.token
-    ciPerPage: 20
 
     events:
       'click .stalk': 'stalk'
@@ -22,18 +20,17 @@ define [
     stalk: (e) ->
       self = @
       target = $(e.currentTarget).parent()
+      loader = target.find('.loading').show()
       repoBig = target.find('.repo').text()
       data = repoBig.split('/')
-      url = 'repos/' + data[0] + '/' + data[1] + '/commits'
+      repo = data[1]
 
-      apiCall = @apiCall(url, 'get', 'jsonp',
-        access_token: @userToken
-        per_page: this.ciPerPage
-      ).done (res) =>
-        @$results.find('h2').html data[1]
-        @showResults res.data, url, no
+      Github.getCommits data[0], repo, {}, (res) =>
+        @$results.find('h2').html repo
+        loader.hide()
+        @showResults res, no
 
-    showResults: (data, url, recursive) ->
+    showResults: (data, recursive) ->
       self    = @
       ciStr   = ''
       dataLen = data.length
@@ -54,12 +51,5 @@ define [
 
       # Render commits
       @$results.find('.commits').html ciStr
-
-    apiCall: (url, method, dataType, data) ->
-      $.ajax
-        url:      @apiUrl + url
-        type:     method
-        dataType: dataType
-        data:     data
 
   new StalkingsView()

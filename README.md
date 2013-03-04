@@ -1,5 +1,9 @@
 # Stalkhub
 
+Stalhub is an application based on the [Github API](http://developer.github.com/v3) which aim is to follow push activity about Github repositories.
+
+You can check it, use it, enjoy it right now: [Stalkhub](http://stalkhub.herokuapp.com). See more information on the [about page](http://stalkhub.herokuapp.com/about).
+
 ## Requirements
 
 - Ruby 1.9.3 (my RPM version is 4.9.1.1)

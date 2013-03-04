@@ -37,6 +37,8 @@
     <%= yield %>
   </div>
 
+  <hr />
+
   <div class="footer">
     <% if current_user %>
     <p class="pull-right"><%= link_to 'Delete my account', current_user, method: :delete, data: { confirm: '%{login}, are you sure you want to delete your account?' % {:login => current_user.login} } %></p>

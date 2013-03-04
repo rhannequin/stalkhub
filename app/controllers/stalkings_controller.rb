@@ -5,6 +5,7 @@ class StalkingsController < ApplicationController
   # GET /stalkings.json
   def index
     @stalkings = Stalking.all
+    @require_js[:script] = 'views/StalkingsView'
 
     respond_to do |format|
       format.html # index.html.erb

@@ -6,9 +6,8 @@ define [
   'views/StalkingListView',
   'models/Stalking',
   'views/CommitListView',
-  'models/Commit',
-  'handlebars'
-], ($, _, Backbone, Github, StalkingListView, Stalking, CommitListView, Commit, Handlebars) ->
+  'models/Commit'
+], ($, _, Backbone, Github, StalkingListView, Stalking, CommitListView, Commit) ->
 
   StalkingsView = Backbone.View.extend
 

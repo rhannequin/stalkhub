@@ -3,9 +3,12 @@ define [
   'lodash',
   'backbone',
   'Github',
+  'views/StalkingListView',
+  'models/Stalking',
   'views/CommitListView',
-  'models/Commit'
-], ($, _, Backbone, Github, CommitListView, Commit) ->
+  'models/Commit',
+  'handlebars'
+], ($, _, Backbone, Github, StalkingListView, Stalking, CommitListView, Commit, Handlebars) ->
 
   StalkingsView = Backbone.View.extend
 
@@ -16,11 +19,23 @@ define [
       'click .stalk': 'stalk'
 
     initialize: ->
-      @commitListView = new CommitListView()
+      @$stalingList = @$el.find('.span5')
+      @stalkingListView = new StalkingListView()
+      @stalkingListView.commitListView = new CommitListView()
+      @getStalkings().done (stalkings) =>
+        @renderStalkings stalkings
+
+    getStalkings: ->
+      $.ajax
+        url: '/stalkings'
+        dataType: 'json'
+
+    renderStalkings: (stalkings) ->
+      @stalkingListView.collection.add stalkings
+      @$stalingList.prepend @stalkingListView.render()
 
     stalk: (e) ->
-      self = @
-      @commitListView.collection.reset()
+      @stalkingListView.commitListView.collection.reset()
       target = $(e.currentTarget).parent()
       loader = target.find('.loading').show()
       repoBig = target.find('.repo').text()
@@ -34,6 +49,7 @@ define [
 
     showResults: (data, recursive) ->
       self    = @
+      commitListView = @stalkingListView.commitListView
       ciStr   = ''
       dataLen = data.length
 
@@ -47,9 +63,9 @@ define [
           author = author: obj.committer.login, isLoggedProfile: yes
         else author = author: obj.commit.author.name
         commit = new Commit _.extend(params, author)
-        @commitListView.collection.add commit
+        commitListView.collection.add commit
 
       # Render commits
-      @$results.find('.commits').html @commitListView.render()
+      @$results.find('.commits').html commitListView.render()
 
   new StalkingsView()

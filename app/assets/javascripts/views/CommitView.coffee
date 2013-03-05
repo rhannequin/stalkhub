@@ -1,10 +1,9 @@
-define ['jquery', 'backbone', 'handlebars', 'models/Commit'], ($, Backbone, Handlebars, Commit) ->
+define ['jquery', 'backbone', 'handlebars'], ($, Backbone, Handlebars) ->
 
   Handlebars.registerHelper 'safe', (text) -> new Handlebars.SafeString text
 
-  CommitView = Backbone.Collection.extend
+  CommitView = Backbone.View.extend
 
-    model : Commit
     tagName: 'li'
     compiled: Handlebars.compile $('#commit-template').html()
 

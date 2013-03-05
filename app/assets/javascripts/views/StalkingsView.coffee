@@ -3,9 +3,9 @@ define [
   'lodash',
   'backbone',
   'Github',
-  'models/Commit',
-  'views/CommitView'
-], ($, _, Backbone, Github, Commit, CommitView) ->
+  'views/CommitListView',
+  'models/Commit'
+], ($, _, Backbone, Github, CommitListView, Commit) ->
 
   StalkingsView = Backbone.View.extend
 
@@ -16,9 +16,11 @@ define [
       'click .stalk': 'stalk'
 
     initialize: ->
+      @commitListView = new CommitListView()
 
     stalk: (e) ->
       self = @
+      @commitListView.collection.reset()
       target = $(e.currentTarget).parent()
       loader = target.find('.loading').show()
       repoBig = target.find('.repo').text()
@@ -45,11 +47,9 @@ define [
           author = author: obj.committer.login, isLoggedProfile: yes
         else author = author: obj.commit.author.name
         commit = new Commit _.extend(params, author)
-        commitView = new CommitView()
-        commitView.model = commit
-        ciStr += commitView.render()
+        @commitListView.collection.add commit
 
       # Render commits
-      @$results.find('.commits').html ciStr
+      @$results.find('.commits').html @commitListView.render()
 
   new StalkingsView()

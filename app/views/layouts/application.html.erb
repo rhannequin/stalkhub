@@ -12,7 +12,7 @@
   <div class="masthead">
     <ul class="nav nav-pills pull-right">
       <% if current_user %>
-      <li><span>Hey, <%= current_user.login %><span></li>
+      <li><span>Hey, <%= link_to current_user.login, profile_link(current_user.login), :target => '_blank' %><span></li>
       <li><%= link_to 'Logout', logout_path %></li>
       <li><%= link_to 'My stalkings', stalkings_path %></li>
       <li><%= link_to 'Settings', settings_path %></li>

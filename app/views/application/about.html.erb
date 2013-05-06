@@ -1,6 +1,8 @@
 <div class="about">
 
-  <a href=""><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonas.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on Github" /></a>
+  <%= link_to repo_link('rhannequin', 'stalkhub'), :target => '_blank' do %>
+    <img style="position: absolute; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_orange_ff7600.png" alt="Fork me on GitHub">
+  <% end %>
 
   <h1>About Stalkhub</h1>
 
@@ -11,7 +13,7 @@
   <h2>Contributors</h2>
 
   <ul>
-    <li>Rémy Hannequin: <a href="https://twitter.com/rhannequin">Twitter</a> - <a href="https://github.com/RemyHannequin">Github</a></li>
+    <li>Rémy Hannequin: <a href="https://twitter.com/rhannequin">Twitter</a> - <%= link_to 'Github', profile_link('rhannequin'), :target => '_blank' %></li>
   </ul>
 
   <h2>Tech Stack</h2>
@@ -41,6 +43,6 @@
 
   <h2>Contribute - Fork - Browse code</h2>
 
-  <p>You can get all information you need about the project's code and how to contribute on <a href="https://github.com/RemyHannequin/stalkhub">Github</a>.</p>
+  <p>You can get all information you need about the project's code and how to contribute on <%= link_to 'Github', repo_link('rhannequin', 'stalkhub'), :target => '_blank' %>.</p>
 
 </div>

@@ -1,2 +1,3 @@
-define ['jquery', 'lodash', 'backbone', 'views/MainView'], ($, _, Backbone, MainView) ->
-  mainView = new MainView()
+define ['jquery', 'jqueryujs'], ($, jqueryujs) ->
+  script = $('#require-js').data 'script'
+  if script? then require([script])

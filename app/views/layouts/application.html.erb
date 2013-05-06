@@ -2,8 +2,7 @@
 <html>
 <head>
   <title>Stalkhub</title>
-  <%= stylesheet_link_tag "application", :media => "all" %>
-  <%= stylesheet_link_tag "bootstrap",   :media => "all" %>
+  <%= stylesheet_link_tag 'application', 'bootstrap', controller_name, :media => 'all' %>
   <%= csrf_meta_tags %>
 </head>
 <body>
@@ -13,9 +12,12 @@
   <div class="masthead">
     <ul class="nav nav-pills pull-right">
       <% if current_user %>
-      <li><%= link_to 'Hey, ' + current_user.login, '' %></a></li>
-      <li><%= link_to 'Logout', logout_path %></a></li>
+      <li><span>Hey, <%= link_to current_user.login, profile_link(current_user.login), :target => '_blank' %><span></li>
+      <li><%= link_to 'Logout', logout_path %></li>
+      <li><%= link_to 'My stalkings', stalkings_path %></li>
+      <li><%= link_to 'Settings', settings_path %></li>
       <% end %>
+      <li><%= link_to 'About', about_path %></li>
     </ul>
     <h3 class="muted"><%= link_to 'Stalkhub', root_path %></h3>
   </div>
@@ -31,14 +33,14 @@
   <% end %>
 
   <div class="jumbotron">
-    <h1>Stalk now!</h1>
-
     <%= yield %>
   </div>
 
+  <hr />
+
   <div class="footer">
     <% if current_user %>
-    <p class="pull-right"><a href="/delete/confirm">Delete my account</a></p>
+    <p class="pull-right"><%= link_to 'Delete my account', current_user, method: :delete, data: { confirm: '%{login}, are you sure you want to delete your account?' % {:login => current_user.login} } %></p>
     <% end %>
     <p><a href="https://twitter.com/rhannequin">Beerware License</a></p>
   </div>
@@ -67,7 +69,7 @@
   <hr>
 </script>
 
-<script data-params='<%= { :user => current_user }.to_json.html_safe %>' data-main="/assets/main.js" src="/assets/require.js" id="require-js"></script>
+<script data-script='<%= @require_js[:script].empty? ? '' : @require_js[:script] %>' data-params='<%= @require_js[:params].to_json.html_safe %>' data-main="/assets/main.js" src="/assets/require.js" id="require-js"></script>
 
 </body>
 </html>

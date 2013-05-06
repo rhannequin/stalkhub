@@ -1,8 +1,9 @@
 Stalkhub::Application.routes.draw do
 
-  resource :users
-  get '/delete/confirm', :to => 'users#destroy_confirm'
-  get '/delete',         :to => 'users#destroy'
+  resources :stalkings
+
+  resources :users
+  get '/settings', :to => 'users#show', :as => :settings
 
   # Github auth
   get '/auth/callback', :to => 'sessions#callback'
@@ -10,6 +11,8 @@ Stalkhub::Application.routes.draw do
   get '/login',  :to => 'sessions#login'
   post '/login', :to => 'sessions#login'
   get '/logout', :to => 'sessions#logout', :as => :logout
+
+  get '/about',  :to => 'application#about', :as => :about
 
   root :to => 'application#home'
 

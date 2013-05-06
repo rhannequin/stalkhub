@@ -14,7 +14,7 @@ class SessionsController < ApplicationController
       session[:github_user] = { :token      => token[1],
                                 :login      => user['login'],
                                 :avatar_url => user['avatar_url'] }
-      redirect_to new_users_path
+      redirect_to new_user_path
     end
   end
 

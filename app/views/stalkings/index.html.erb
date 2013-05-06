@@ -1,0 +1,23 @@
+<h1>Listing stalkings</h1>
+
+<div class="row-fluid stalkings">
+  <div class="span5">
+    <p>
+      <a href="<%= new_stalking_path %>"><button class="btn btn-primary">New Stalking</button></a>
+    </p>
+  </div>
+  <div class="span7 results">
+    <h2></h2>
+    <div class="commits"></div>
+  </div>
+</div>
+
+<script id="stalking-template" type="text/template">
+  <p>
+    <a title="Delete" rel="nofollow" rel="nofollow" data-confirm="Are you sure you want to delete this Stalking?" href="/stalkings/{{ id }}"><i class="icon-remove"></i></a>
+    <a href="/stalkings/{{ id }}" title="Edit"><i class="icon-edit"></i></a>
+    <a href="https://github.com/{{ owner }}/{{ repo }}" target="blank" class="repo">{{ owner }}/{{ repo }}</a>
+    <button class="btn btn-success stalk">Stalk</button>
+    <img class="loading" src="/assets/ajax-loader.gif" alt="Loading..." />
+  </p>
+</script>

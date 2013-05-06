@@ -1,0 +1,25 @@
+<%= form_for(@stalking) do |f| %>
+  <% if @stalking.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@stalking.errors.count, "error") %> prohibited this stalking from being saved:</h2>
+
+      <ul>
+      <% @stalking.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :owner %><br />
+    <%= f.text_field :owner %>
+  </div>
+  <div class="field">
+    <%= f.label :repo %><br />
+    <%= f.text_field :repo %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

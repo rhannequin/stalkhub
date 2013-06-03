@@ -23,6 +23,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new session[:github_user]
     @user.password = params[:user][:password]
+    @user.encrypt_password
     if @user.valid? and @user.save
       self.current_user = @user
       session[:github_user] = nil # session value not necessary anymore

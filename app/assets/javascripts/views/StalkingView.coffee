@@ -1,4 +1,4 @@
-define ['jquery', 'backbone'], ($, Backbone) ->
+define ['jquery', 'backbone', 'handlebars'], ($, Backbone, Handlebars) ->
 
   StalkingView = Backbone.View.extend
 

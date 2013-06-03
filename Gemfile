@@ -10,6 +10,7 @@ end
 group :development, :test do
   gem 'sqlite3'
   gem "better_errors", ">= 0.3.2"
+  gem 'quiet_assets'
 end
 
 
@@ -26,3 +27,4 @@ end
 
 gem 'jquery-rails'
 gem "figaro"
+gem "octokit"

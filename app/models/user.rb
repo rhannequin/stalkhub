@@ -1,11 +1,13 @@
 require 'digest'
 class User < ActiveRecord::Base
+  attr_accessor :gh
+
   attr_accessible :avatar_url, :login, :password, :token
 
   validates :avatar_url, :token, :presence => true
-  validates :login,     :presence   => true,
-                        :uniqueness => { :case_sensitive => false }
-  validates :password,  :length     => { :within => 6..100 }
+  validates :login,      :presence   => true,
+                         :uniqueness => { :case_sensitive => false }
+  validates :password,   :length     => { :within => 6..100 }
 
   has_many :stalkings, :dependent => :destroy
 

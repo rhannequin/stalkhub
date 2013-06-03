@@ -4,11 +4,12 @@ class StalkingsController < ApplicationController
   # GET /stalkings
   # GET /stalkings.json
   def index
+    @stalkings = Stalking.where("user_id = ?", current_user.id)
     @require_js[:script] = 'views/StalkingsView'
 
     respond_to do |format|
       format.html # index.html.erb
-      format.json { render json: Stalking.all }
+      format.json { render json: @stalkings }
     end
   end
 

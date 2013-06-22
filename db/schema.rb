@@ -22,16 +22,14 @@ ActiveRecord::Schema.define(:version => 20130228214949) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "login"
+    t.string   "username"
     t.string   "avatar_url"
-    t.string   "password"
-    t.string   "encrypted_password"
-    t.string   "salt"
     t.string   "token"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.string   "uid"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
-  add_index "users", ["login"], :name => "index_users_on_login", :unique => true
+  add_index "users", ["username"], :name => "index_users_on_username", :unique => true
 
 end

@@ -28,3 +28,5 @@ end
 gem 'jquery-rails'
 gem "figaro"
 gem "octokit"
+gem 'omniauth'
+gem 'omniauth-github'

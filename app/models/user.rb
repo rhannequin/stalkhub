@@ -1,43 +1,23 @@
 require 'digest'
 class User < ActiveRecord::Base
-  attr_accessor :gh
-
-  attr_accessible :avatar_url, :login, :password, :token
+  attr_accessor :gh # Octokit
+  attr_accessible :avatar_url, :token, :uid, :username
 
   validates :avatar_url, :token, :presence => true
-  validates :login,      :presence   => true,
+  validates :username,   :presence   => true,
                          :uniqueness => { :case_sensitive => false }
-  validates :password,   :length     => { :within => 6..100 }
 
   has_many :stalkings, :dependent => :destroy
 
-  def has_password?(submitted_password)
-    encrypted_password == encrypt(submitted_password)
-  end
-
-  def self.authenticate(login, submitted_password)
-    user = find_by_login(login)
-    return nil  if user.nil?
-    return user if user.has_password?(submitted_password)
-  end
-
-  def encrypt_password
-    self.salt = make_salt if new_record?
-    self.encrypted_password = encrypt(password)
-    self.password = self.encrypted_password
-  end
-
-  private
-
-    def encrypt(string)
-      secure_hash("#{salt}--#{string}")
+  def self.authenticate(auth_hash)
+    unless user = find_by_uid(auth_hash.uid)
+      user = User.new :uid => auth_hash.uid
     end
-
-    def make_salt
-      secure_hash("#{ENV['SECRET_HASH']}--#{password}") # Check if it works
-    end
-
-    def secure_hash(string)
-      Digest::SHA2.hexdigest(string)
-    end
+    puts auth_hash.inspect
+    user.avatar_url = auth_hash.info.image
+    user.token = auth_hash.credentials.token
+    user.username = auth_hash.info.nickname
+    user.save
+    user
+  end
 end

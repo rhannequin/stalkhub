@@ -12,7 +12,7 @@
   <div class="masthead">
     <ul class="nav nav-pills pull-right">
       <% if current_user %>
-      <li><span>Hey, <%= link_to current_user.login, profile_link(current_user.login), :target => '_blank' %><span></li>
+      <li><span>Hey, <%= link_to current_user.username, profile_link(current_user.username), :target => '_blank' %><span></li>
       <li><%= link_to 'Logout', logout_path %></li>
       <li><%= link_to 'My stalkings', stalkings_path %></li>
       <li><%= link_to 'Settings', settings_path %></li>
@@ -40,7 +40,7 @@
 
   <div class="footer">
     <% if current_user %>
-    <p class="pull-right"><%= link_to 'Delete my account', current_user, method: :delete, data: { confirm: '%{login}, are you sure you want to delete your account?' % {:login => current_user.login} } %></p>
+    <p class="pull-right"><%= link_to 'Delete my account', destroy_account_path, method: :delete, data: { confirm: "#{current_user.username}, are you sure you want to delete your account?" } %></p>
     <% end %>
     <p><a href="https://twitter.com/rhannequin">Beerware License</a></p>
   </div>
@@ -52,12 +52,12 @@
 <![endif]-->
 
 <!-- Google Analytics: change UA-XXXXX-X to be your site's ID. -->
-<script>
+<!--<script>
   var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
   (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
   g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
   s.parentNode.insertBefore(g,s)}(document,'script'));
-</script>
+</script>-->
 
 <!-- Commit template -->
 <script type="x/template" id="commit-template">

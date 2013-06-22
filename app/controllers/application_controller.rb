@@ -4,7 +4,6 @@ class ApplicationController < ActionController::Base
   before_filter :require_js
 
   def home
-    puts current_user.gh.inspect if not current_user.nil?
     @require_js[:script] = 'views/MainView'
   end
 
@@ -37,7 +36,7 @@ class ApplicationController < ActionController::Base
 
     def init_github_client
       # Add Octokit to current_user
-      @current_user.gh = Octokit::Client.new(:login => @current_user.login, :password => @current_user.token)
+      @current_user.gh = Octokit::Client.new(:login => @current_user.username, :password => @current_user.token)
     end
 
 end

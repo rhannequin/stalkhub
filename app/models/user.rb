@@ -13,7 +13,6 @@ class User < ActiveRecord::Base
     unless user = find_by_uid(auth_hash.uid)
       user = User.new :uid => auth_hash.uid
     end
-    puts auth_hash.inspect
     user.avatar_url = auth_hash.info.image
     user.token = auth_hash.credentials.token
     user.username = auth_hash.info.nickname

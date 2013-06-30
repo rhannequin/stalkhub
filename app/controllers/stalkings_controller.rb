@@ -5,7 +5,13 @@ class StalkingsController < ApplicationController
   # GET /stalkings.json
   def index
     @stalkings = Stalking.where("user_id = ?", current_user.id)
-    @require_js[:script] = 'views/StalkingsView'
+    @stalkings.each do |stalking|
+      if @current_user.gh.repository?({ :username => stalking.owner, :name => stalking.repo })
+        stalking.gh = @current_user.gh.repo({ :username => stalking.owner, :name => stalking.repo })
+      else
+        stalking.gh = "#{stalking.owner}/#{stalking.repo}"
+      end
+    end
 
     respond_to do |format|
       format.html # index.html.erb
@@ -17,6 +23,8 @@ class StalkingsController < ApplicationController
   # GET /stalkings/1.json
   def show
     @stalking = Stalking.find(params[:id])
+    @require_js[:script] = 'views/StalkingView'
+    @require_js[:params][:stalking] = @stalking
 
     respond_to do |format|
       format.html # show.html.erb

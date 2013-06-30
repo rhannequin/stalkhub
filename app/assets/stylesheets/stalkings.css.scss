@@ -46,4 +46,12 @@ h1 {
       }
     }
   }
+  .commits {
+    .previous {
+      display: none;
+      &.visible {
+        display: block;
+      }
+    }
+  }
 }

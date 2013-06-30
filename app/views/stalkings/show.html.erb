@@ -5,6 +5,9 @@
   <div class="row-fluid">
     <div id="contributors" class="contributors"></div>
   </div>
+  <div class="row-fluid">
+    <div id="commits" class="commits"></div>
+  </div>
   <%= link_to 'Edit', edit_stalking_path(@stalking) %> |
   <%= link_to 'Back', stalkings_path %>
 </div>
@@ -57,4 +60,28 @@
     </div>
     {{/isset}}
   </div>
+</script>
+
+<script id="commits-template" type="text/template">
+  <h2>Commits</h2>
+  <div class="row-fluid">
+    <h3>Unread commits</h3>
+    <div class="unread">{{{ content }}}</div>
+  </div>
+  <div>
+    <h3>Previous commits</h3><button class="btn toggle-old-commits">Hide/Show commits</div>
+    <div class="previous {{#if visible}}visible{{/if}}">
+      {{{ commits }}}
+    </div>
+  </div>
+</script>
+
+<script id="commits-loop-template" type="text/template">
+  {{#each this}}
+  <div class="row-fluid">
+    <div class="span3">{{{ safeUsername this }}}</div>
+    <div class="span6">{{{ commit.message }}}</div>
+    <div class="span3">{{ strToTime commit.committer.date }}</div>
+  </div>
+  {{/each}}
 </script>

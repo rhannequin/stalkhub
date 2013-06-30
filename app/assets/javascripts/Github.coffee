@@ -34,19 +34,22 @@ define ['jquery'], ($) ->
     getRepo: (owner, repo, params, cb, err = ->) ->
       params = @setParams params
       @makeRequest('repos/' + owner + '/' + repo, params.method, params.dataType, params.data)
-      .done (res) -> if res.meta.status is 404 then err() else cb(res.data)
+      .done (res) ->
+        if res.meta.status is 404 then err() else cb(res.data)
       .fail -> err()
 
     getCommits: (owner, repo, params, cb, err = ->) ->
       params = @setParams params
       @makeRequest('repos/' + owner + '/' + repo + '/commits', params.method, params.dataType, params.data)
-      .done (res) -> if res.meta.status is 404 then err() else cb(res.data)
+      .done (res) ->
+        if res.meta.status is 404 then err() else cb(res.data)
       .fail -> err()
 
     getContributors: (owner, repo, params, cb, err = ->) ->
       params = @setParams params
       @makeRequest('repos/' + owner + '/' + repo + '/contributors', params.method, params.dataType, params.data)
-      .done (res) -> if res.meta.status is 404 then err() else cb(res.data)
+      .done (res) ->
+        if res.meta.status is 404 then err() else cb(res.data)
       .fail -> err()
 
 

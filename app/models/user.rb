@@ -1,7 +1,6 @@
 require 'digest'
 class User < ActiveRecord::Base
   attr_accessor :gh # Octokit
-  attr_accessible :avatar_url, :token, :uid, :username
 
   validates :avatar_url, :token, :presence => true
   validates :username,   :presence   => true,

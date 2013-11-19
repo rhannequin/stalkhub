@@ -6,8 +6,8 @@ class StalkingsController < ApplicationController
   def index
     @stalkings = Stalking.where("user_id = ?", current_user.id)
     @stalkings.each do |stalking|
-      if @current_user.gh.repository?({ :username => stalking.owner, :name => stalking.repo })
-        stalking.gh = @current_user.gh.repo({ :username => stalking.owner, :name => stalking.repo })
+      if @current_user.gh.repository? "#{stalking.owner}/#{stalking.repo}"
+        stalking.gh = @current_user.gh.repo "#{stalking.owner}/#{stalking.repo}"
       else
         stalking.gh = "#{stalking.owner}/#{stalking.repo}"
       end
@@ -51,7 +51,7 @@ class StalkingsController < ApplicationController
   # POST /stalkings
   # POST /stalkings.json
   def create
-    @stalking = Stalking.new(params[:stalking])
+    @stalking = Stalking.new(app_params)
     @stalking.user_id = current_user.id
 
     respond_to do |format|
@@ -72,7 +72,7 @@ class StalkingsController < ApplicationController
     @stalking.user_id = current_user.id
 
     respond_to do |format|
-      if @stalking.update_attributes(params[:stalking])
+      if @stalking.update_attributes(app_params)
         format.html { redirect_to @stalking, flash: { success: 'Stalking was successfully updated.' } }
         format.json { head :no_content }
       else
@@ -93,4 +93,9 @@ class StalkingsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  private
+    def app_params
+      params.require(:stalking).permit(:user_id, :owner, :repo, :last_commit_seen)
+    end
 end

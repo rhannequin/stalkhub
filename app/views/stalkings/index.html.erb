@@ -19,7 +19,11 @@
       <% else %>
         <p><%= gh %><br><span class="label label-important">This repository doesn't exist</span></p>
       <% end %>
-      <%= link_to(stalking_path(stalking), :confirm => 'Are you sure you want to delete this Stalking?', :method => :delete, :rel => 'nofollow') do %>
+      <%= link_to(stalking_path(stalking),
+        data: { confirm: 'Are you sure you want to delete this Stalking?' },
+        method: :delete,
+        rel: 'nofollow'
+      ) do %>
         <i class="icon-remove"></i>
       <% end %>
     </div>

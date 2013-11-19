@@ -10,21 +10,32 @@ class ApplicationController < ActionController::Base
   def about
   end
 
-  private
-    def current_user=(usr)
-      session[:user] = usr
+  protected
+
+    def define_current_user_by_user(usr)
+      session[:user_id] = usr.id
+      @current_user = usr
+    end
+
+    def define_current_user_by_id(user_id)
+      session[:user_id] = user_id
+      @current_user = User.find_by_id user_id
     end
 
     def current_user
       return @current_user if @current_user
-      unless session[:user].nil?
-        @current_user = session[:user]
+      unless session[:user_id].nil?
+        define_current_user_by_id session[:user_id]
         init_github_client
         return @current_user
       end
-      @current_user = session[:user] = nil
+      destroy_current_user
     end
     helper_method :current_user
+
+    def destroy_current_user
+      @current_user = session[:user_id] = nil
+    end
 
     def is_logged?
       redirect_to root_path, flash: { error: 'You must be logged to enjoy this application.' } if current_user.nil?

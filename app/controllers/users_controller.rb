@@ -15,7 +15,7 @@ class UsersController < ApplicationController
   def destroy
     user = User.find(current_user.id)
     if user.destroy
-      self.current_user = nil
+      destroy_current_user
       redirect_to root_path, flash: {success: 'Your account has been successfully deleted. You still can create a new account ;)'}
     else
       redirect_to root_path, flash: {error: 'Impossible to delete your account, please contact us for further information.'}

@@ -47,7 +47,7 @@ class ApplicationController < ActionController::Base
 
     def init_github_client
       # Add Octokit to current_user
-      @current_user.gh = Octokit::Client.new(:login => @current_user.username, :oauth_token => @current_user.token)
+      @current_user.gh = Octokit::Client.new access_token: @current_user.token
     end
 
 end

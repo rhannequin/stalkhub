@@ -49,6 +49,7 @@ GEM
       execjs
     coffee-script-source (1.6.3)
     daemons (1.1.9)
+    database_cleaner (1.2.0)
     diff-lcs (1.2.5)
     erubis (2.7.0)
     eventmachine (1.0.3)
@@ -221,6 +222,7 @@ DEPENDENCIES
   better_errors (~> 1.0.1)
   capybara
   coffee-rails (~> 4.0.0)
+  database_cleaner
   factory_girl_rails
   faker
   figaro

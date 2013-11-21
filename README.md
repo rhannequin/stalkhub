@@ -6,13 +6,13 @@ You can check it, use it, enjoy it right now: [Stalkhub](http://stalkhub.herokua
 
 ## Requirements
 
-- Ruby 1.9.3 (my RPM version is 4.9.1.1)
-- Ruby On Rails 3.2.11
+- Ruby 2.0.0 (rbenv 0.4)
+- Ruby On Rails 4.0.0
 - SQLite3
 
 ## Installation
 
-    git clone git@github.com:RemyHannequin/stalkhub.git
+    git clone git@github.com:rhannequin/stalkhub.git
     cd stalkhub
     bundle install
     rake db:migrate
@@ -43,10 +43,10 @@ You can use the Rails command `rails server -p 5000` or the Procfile file with `
 
 ## Contribute
 
-You can [fork](https://github.com/RemyHannequin/stalkhub/fork) and submit pull-requests.
+You can [fork](https://github.com/rhannequin/stalkhub/fork) and submit pull-requests.
 
-Feel free to submit [issues](https://github.com/RemyHannequin/stalkhub/issues) if you notice a bug or think of a new feature. Please check the [changelog file](https://github.com/RemyHannequin/stalkhub/blob/master/changelog.md) to see the project history.
+Feel free to submit [issues](https://github.com/rhannequin/stalkhub/issues) if you notice a bug or think of a new feature. Please check the [changelog file](https://github.com/rhannequin/stalkhub/blob/master/changelog.md) to see the project history.
 
 ## License
 
-MIT, see [LICENSE file](https://github.com/RemyHannequin/stalkhub/blob/master/LICENSE).
+MIT, see [LICENSE file](https://github.com/rhannequin/stalkhub/blob/master/LICENSE).

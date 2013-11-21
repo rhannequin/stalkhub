@@ -6,15 +6,16 @@
   <% end %>
     <div class="span4">
       <% gh = stalking.gh %>
-      <% if gh.class.to_s != 'String' %>
-        <%= image_tag(gh.owner.avatar_url, :alt => gh.owner.login) %>
+      <% is_valid_repo = gh.nil? %>
+      <% unless is_valid_repo %>
+        <%= image_tag(gh.owner.avatar_url, alt: gh.owner.login) %>
         <% owner = gh.full_name.split('/') %>
         <h2>
           <span class="repo-owner"><%= gh.owner.login %></span><br>
           <span class="repo-name"><%= gh.name %></span>
         </h2>
         <p>Last update: <%= l gh.updated_at.to_date, format: :long %></p>
-        <%= link_to 'Stalk', stalking, :class => 'btn btn-primary'  %>
+        <%= link_to 'Stalk', stalking, class: 'btn btn-primary'  %>
         <br>
       <% else %>
         <p><%= gh %><br><span class="label label-important">This repository doesn't exist</span></p>

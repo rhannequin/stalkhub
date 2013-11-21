@@ -5,7 +5,7 @@ describe StalkingsController do
   let(:new_stalking) { FactoryGirl.build(:stalking).attributes }
 
   before(:all) do
-    @user = FactoryGirl.create(:user)
+    @user = FactoryGirl.create(:github_user)
   end
 
   before(:all) do

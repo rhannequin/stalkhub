@@ -7,4 +7,11 @@ FactoryGirl.define do
     f.token      { Faker::Lorem.characters(10) }
     f.uid        { Faker::Lorem.characters(10) }
   end
+
+  factory :github_user, parent: :user do |f|
+    f.username   ENV['GITHUB_USERNAME']
+    f.avatar_url { Faker::Lorem.characters(10) }
+    f.token      ENV['GITHUB_TOKEN']
+    f.uid        { Faker::Lorem.characters(10) }
+  end
 end

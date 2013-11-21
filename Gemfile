@@ -28,6 +28,7 @@ gem 'therubyracer'
 # Database
 group :production do
   gem 'pg'
+  gem 'rails_12factor' # Logging and assets with Heroku
 end
 
 group :development, :test do

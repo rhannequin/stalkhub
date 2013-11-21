@@ -1,30 +1,54 @@
 source 'https://rubygems.org'
+ruby "2.0.0"
 
-gem 'rails', '3.2.11'
-gem 'thin'
+gem 'rails', '4.0.0'
+
+gem 'rack-timeout'
+gem 'unicorn'
+
+gem 'newrelic_rpm'
+
+# Open-Source configuration management
+gem "figaro"
+
+# Github API gem
+gem "octokit"
+
+# Ruby OAuth gem
+gem 'omniauth'
+gem 'omniauth-github'
+
+gem 'jquery-rails'
+gem 'sass-rails', '~> 4.0.0'
+gem 'coffee-rails', '~> 4.0.0'
+
+gem 'uglifier', '>= 1.3.0'
+gem 'therubyracer'
 
 # Database
 group :production do
   gem 'pg'
+  gem 'rails_12factor' # Logging and assets with Heroku
 end
+
 group :development, :test do
   gem 'sqlite3'
-  gem "better_errors", ">= 0.3.2"
+  gem "better_errors", "~> 1.0.1"
   gem 'quiet_assets'
+  gem 'rspec-rails'
+  gem 'factory_girl_rails'
+  gem 'faker'
+  gem 'database_cleaner'
 end
 
-
-# Gems used only for assets and not required
-# in production environments by default.
-group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
-
-  gem 'uglifier', '>= 1.0.3'
-  gem 'therubyracer'
+group :test do
+  gem 'capybara'
+  gem 'guard-rspec'
+  gem 'launchy'
+  gem 'shoulda-matchers'
 end
 
-
-gem 'jquery-rails'
-gem "figaro"
-gem "octokit"
+group :doc do
+  # bundle exec rake doc:rails generates the API under doc/api.
+  gem 'sdoc', require: false
+end

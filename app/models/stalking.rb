@@ -1,5 +1,5 @@
 class Stalking < ActiveRecord::Base
-  attr_accessible :user_id, :owner, :repo
+  attr_accessor   :gh
 
   belongs_to :user
 end

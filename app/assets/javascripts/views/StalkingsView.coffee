@@ -18,7 +18,7 @@ define [
       'click .stalk': 'stalk'
 
     initialize: ->
-      @$stalingList = @$el.find('.span5')
+      @$stalingList = @$el.find('.stalkink-list')
       @stalkingListView = new StalkingListView()
       @stalkingListView.commitListView = new CommitListView()
       @getStalkings().done (stalkings) =>

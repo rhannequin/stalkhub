@@ -19,3 +19,5 @@
 
 # Ignore SASS generated cache files
 .sass-cache
+
+/bin

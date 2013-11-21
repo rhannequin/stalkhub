@@ -3,11 +3,55 @@ h1 {
   text-align: center;
 }
 
-.stalkings h2 {
-  margin-top: 0px;
+.stalkings {
   text-align: center;
+  h2 {
+    margin-top: 0px;
+    .repo-owner {
+      font-size: 15pt;
+    }
+  }
 }
 
 .loading {
   display: none;
+}
+
+.page.show {
+  .stalking {
+    header {
+      text-align: center;
+    }
+    .basic-info {
+      text-align: center;
+      .label {
+        font-weight: bold;
+      }
+    }
+  }
+  .contributors {
+    .top-contributors {
+      text-align: center;
+      .second {
+        margin-top: 40px;
+        h3 {
+          font-size: 20px;
+        }
+      }
+      .third {
+        margin-top: 80px;
+        h3 {
+          font-size: 15px;
+        }
+      }
+    }
+  }
+  .commits {
+    .previous {
+      display: none;
+      &.visible {
+        display: block;
+      }
+    }
+  }
 }

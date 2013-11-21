@@ -50,6 +50,9 @@ body {
     }
     .form-inline {
       margin-top: 15px;
+      input[type="text"] {
+        text-align: center;
+      }
     }
   }
 }

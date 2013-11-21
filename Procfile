@@ -1,1 +1,1 @@
-web: bundle exec rails server thin -p ${PORT-5000} -e ${RACK_ENV-"development"}
+web: bundle exec unicorn -p ${PORT-5000} -c ./config/unicorn.rb
